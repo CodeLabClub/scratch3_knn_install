@@ -1,0 +1,2 @@
+# scratch_knn_install
+在Scratch3上安装knn模块的一个简单说明
