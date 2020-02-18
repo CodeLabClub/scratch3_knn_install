@@ -144,7 +144,7 @@ export default [
 等待webpack-dev-server –https编译完毕后（此时显示编译错误“Fail to compile”）打开cmder新窗口，在Scratch3\scratch-vm 下按顺序执行 yarn install，yarn link，yarn add uglifyjs-webpack-plugin 和 yarn run watch。
 2.	按照 yarn run watch 的运行结果进行依赖的添加，注意此时停止webpack-dev-server –https和yarn run watch 的运行。之后在新的cmder窗口中在Scratch3\scratch-gui 目录下运行yarn link scratch-vm 命令。
 yarn run watch 的运行报错如下：
-```
+```text
 ERROR in ./src/extensions/scratch3_knn/index.js
     Module not found: Error: Can't resolve '@tensorflow-models/knn-classifier' in 'D:\Scratch3\scratch-vm\src\extensions\scratch3_knn'
      @ ./src/extensions/scratch3_knn/index.js 31:20-64
@@ -185,7 +185,7 @@ ERROR in ./src/extensions/scratch3_knn/index.js
 2.1	在D:\Scratch3\scratch-vm\src\extensions\scratch3_knn（具体目录参见你自己的yarn run watch 运行结果）目录下执行 yarn add babel-polyfill。之后再次运行webpack-dev-server –https 和 yarn run watch。（注意没添加一个依赖过程中终止上述两个cmder窗口中的程序运行，使用Ctrl+C，直至执行yarn add xxxx完毕后再次执行，因为有时一个依赖的安装中也包括了其他依赖的安装，这样可以避免错误和重复安装，执行yarn add xxxx命令需要一个新的cmder窗口）
 
 2.2	第二次编译yarn run watch 报错为：
-```
+```text
 ERROR in ./src/extensions/scratch3_knn/index.js
     Module not found: Error: Can't resolve '@tensorflow-models/knn-classifier' in 'D:\Scratch3\scratch-vm\src\extensions\scratch3_knn'
      @ ./src/extensions/scratch3_knn/index.js 31:20-64
@@ -219,7 +219,7 @@ ERROR in ./src/extensions/scratch3_knn/index.js
 （详见https://github.com/CodeLabClub/scratch3_knn/issues/2 ）
 
 2.3	第三次编译报错为：
-```
+```text
 ERROR in ./src/extensions/scratch3_knn/index.js
     Module not found: Error: Can't resolve '@tensorflow-models/knn-classifier' in 'D:\Scratch3\scratch-vm\src\extensions\scratch3_knn'
      @ ./src/extensions/scratch3_knn/index.js 31:20-64
