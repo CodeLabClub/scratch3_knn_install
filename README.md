@@ -9,13 +9,13 @@ git clone https://github.com/LLK/scratch-gui.git
 git clone https://github.com/LLK/scratch-vm.git
 注意上述指令需要在电脑中新建的文件夹目录下由cmder中执行。且git clone和下面安装过程中涉及的yarn等命令需要自行安装。本篇主要目的在于记录Scratch3网页版中添加knn模块的过程，有关Scratch3开发环境的搭建可详见：https://blog.just4fun.site/post/少儿编程/create-first-scratch3-extension/ 
 ###   1.2	Scratch3的安装
-1.	使用cmder进入Scratch3/scratch-gui，执行yarn install。结果如下：<br>
+1.使用cmder进入Scratch3/scratch-gui，执行yarn install。结果如下：<br>
 ![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/1.png)<br>
 
-2.	在cmder中进入Scratch3/scratch-gui目录下执行webpack-dev-server命令：<br>
+2.在cmder中进入Scratch3/scratch-gui目录下执行webpack-dev-server命令：<br>
 ![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/2.png)<br>
 
-3.	（注：最终出现Compiled successfully 字样才能代表编译完全成功，此时可以打开网址https://127.0.0.1:8601/ ）
+3.（注：最终出现Compiled successfully 字样才能代表编译完全成功，此时可以打开网址https://127.0.0.1:8601/ ）
 另启一个cmder窗口，进入scratch-vm，按顺序输入下列命令：<br>
 ```text
 yarn install
@@ -24,7 +24,7 @@ yarn add uglifyjs-webpack-plugin
 yarn run watch
  ```
 ![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/3.png)<br>
-4.	再打开一个新窗口，在scratch-gui 中输入指令 yarn link scratch-vm。<br>
+4.再打开一个新窗口，在scratch-gui 中输入指令 yarn link scratch-vm。<br>
 ![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/4.png)<br>
 
 至此，Scratch3开发环境的下载和安装完成，打开网页https://127.0.0.1:8601/ 即可查看结果。
@@ -33,13 +33,13 @@ yarn run watch
 ###     2.1	源文件中的设置
 在Scrathc3开发环境下安装knn模块需要对Scratch的scratch-vm和scratch-gui文件夹中的相关文件做出修改并添加相应的本地文件，在Scratch3中添加相对应模块  的方式大致相同，只是index.js文件大相径庭。因此相关过程亦可参考https://blog.just4fun.site/post/少儿编程/create-first-scratch3-extension/ 中所给出的方法。
 
-1.	下载knn需要的本地文件，在所选择的任意文件夹目录下执行 git clone https://github.com/CodeLabClub/scratch3_knn.git 
-2.	将scratch3_knn中的index.js文件复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹中（其中scratch3_knn为新建的文件夹）。
-3.	将scratch3_knn中的mobilenet.js文件夹复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹内（与index.js处于同一文件夹）
-4.	将knn文件夹复制到\Scratch3\scratch-gui\static 目录下。（上述过程可参见https://github.com/CodeLabClub/scratch3_knn/issues/3）
-5.	回到 mobilenet.js 所在文件夹（\Scratch3\scratch-vm\src\extensions\scratch3_knn），修改mobilenet.js中url var BASE_PATH = '/static/knn/'。
-6.	在\Scratch3\scratch-gui\src\lib\libraries\extensions 目录下新建knnAlgorithm文件夹。在其中加入图片knnAlgorithm.png 和 knnAlgorithm-small.svg
-7.	将\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下 index.js 文件的导入部分做如下修改：<br>
+1.下载knn需要的本地文件，在所选择的任意文件夹目录下执行 git clone https://github.com/CodeLabClub/scratch3_knn.git 
+2.将scratch3_knn中的index.js文件复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹中（其中scratch3_knn为新建的文件夹）。
+3.将scratch3_knn中的mobilenet.js文件夹复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹内（与index.js处于同一文件夹）
+4.将knn文件夹复制到\Scratch3\scratch-gui\static 目录下。（上述过程可参见https://github.com/CodeLabClub/scratch3_knn/issues/3）
+5.回到 mobilenet.js 所在文件夹（\Scratch3\scratch-vm\src\extensions\scratch3_knn），修改mobilenet.js中url var BASE_PATH = '/static/knn/'。
+6.在\Scratch3\scratch-gui\src\lib\libraries\extensions 目录下新建knnAlgorithm文件夹。在其中加入图片knnAlgorithm.png 和 knnAlgorithm-small.svg
+7.将\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下 index.js 文件的导入部分做如下修改：<br>
 ```text
 +require('babel-polyfill');
 +const Runtime = require('../../engine/runtime');
@@ -54,7 +54,7 @@ yarn run watch
 +const mobilenetModule = require('./mobilenet.js');
 +const knnClassifier = require('@tensorflow-models/knn-classifier'); 
 ```
-8.	将\Scratch3\scratch-vm\src\extension-support 中extension-manager.js 中的内容做如下修改，以调用scratch_knn中的index文件：<br>
+8.将\Scratch3\scratch-vm\src\extension-support 中extension-manager.js 中的内容做如下修改，以调用scratch_knn中的index文件：<br>
 ```text
 const dispatch = require('../dispatch/central-dispatch');
 const log = require('../util/log');
@@ -88,7 +88,7 @@ const builtinExtensions = {
 
 ```
 
-9.	将上述两个文件中的修改保存后，在\Scratch3\scratch-gui\src\lib\libraries\extensions 文件夹下修改index.jsx文件：<br>
+9.将上述两个文件中的修改保存后，在\Scratch3\scratch-gui\src\lib\libraries\extensions 文件夹下修改index.jsx文件：<br>
 第一处修改，导引入图片。<br>
 ```text
 import translateIconURL from './translate/translate.png';
@@ -140,9 +140,9 @@ export default [
 
 ###     2.2	运行调试及附加依赖的安装
 由于上述index.js中出现了新的依赖，我们需要再次编译并调试程序且准备好所需的依赖。下述操作均在cmder中执行，不再赘述。
-1.	在Scratch3\scratch-gui 目录下按顺序执行 yarn install 和 webpack-dev-server –https 命令。
+1.在Scratch3\scratch-gui 目录下按顺序执行 yarn install 和 webpack-dev-server –https 命令。
 等待webpack-dev-server –https编译完毕后（此时显示编译错误“Fail to compile”）打开cmder新窗口，在Scratch3\scratch-vm 下按顺序执行 yarn install，yarn link，yarn add uglifyjs-webpack-plugin 和 yarn run watch。
-2.	按照 yarn run watch 的运行结果进行依赖的添加，注意此时停止webpack-dev-server –https和yarn run watch 的运行。之后在新的cmder窗口中在Scratch3\scratch-gui 目录下运行yarn link scratch-vm 命令。
+2.按照 yarn run watch 的运行结果进行依赖的添加，注意此时停止webpack-dev-server –https和yarn run watch 的运行。之后在新的cmder窗口中在Scratch3\scratch-gui 目录下运行yarn link scratch-vm 命令。
 yarn run watch 的运行报错如下：
 ```text
 ERROR in ./src/extensions/scratch3_knn/index.js
@@ -184,7 +184,7 @@ ERROR in ./src/extensions/scratch3_knn/index.js
 ```
 2.1	在D:\Scratch3\scratch-vm\src\extensions\scratch3_knn（具体目录参见你自己的yarn run watch 运行结果）目录下执行 yarn add babel-polyfill。之后再次运行webpack-dev-server –https 和 yarn run watch。（注意没添加一个依赖过程中终止上述两个cmder窗口中的程序运行，使用Ctrl+C，直至执行yarn add xxxx完毕后再次执行，因为有时一个依赖的安装中也包括了其他依赖的安装，这样可以避免错误和重复安装，执行yarn add xxxx命令需要一个新的cmder窗口）
 
-2.2	第二次编译yarn run watch 报错为：
+2.2 第二次编译yarn run watch 报错为：
 ```text
 ERROR in ./src/extensions/scratch3_knn/index.js
     Module not found: Error: Can't resolve '@tensorflow-models/knn-classifier' in 'D:\Scratch3\scratch-vm\src\extensions\scratch3_knn'
@@ -213,7 +213,7 @@ ERROR in ./src/extensions/scratch3_knn/index.js
      @ ./src/index.js
      @ ./src/index.js-exposed
      @ ./src/playground/benchmark.js
-     ```
+ ```
 
 同样，停止编译后在D:\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下执行yarn add @tensorflow/tfjs@0.10.0
 （详见https://github.com/CodeLabClub/scratch3_knn/issues/2 ）
