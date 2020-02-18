@@ -39,9 +39,7 @@ git clone https://github.com/LLK/scratch-vm.git
 4.	将knn文件夹复制到\Scratch3\scratch-gui\static 目录下。（上述过程可参见https://github.com/CodeLabClub/scratch3_knn/issues/3）
 5.	回到 mobilenet.js 所在文件夹（\Scratch3\scratch-vm\src\extensions\scratch3_knn），修改mobilenet.js中url var BASE_PATH = '/static/knn/'。
 6.	在\Scratch3\scratch-gui\src\lib\libraries\extensions 目录下新建knnAlgorithm文件夹。在其中加入图片knnAlgorithm.png 和 knnAlgorithm-small.svg
-7.	将\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下 index.js 文件的导入部分做如下修改：（图片指明对应部分，代码以代码部分为准）<br>
-![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/5.png)
-
+7.	将\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下 index.js 文件的导入部分做如下修改：<br>
 ```js
 require('babel-polyfill');
 const Runtime = require('../../engine/runtime');
@@ -57,11 +55,10 @@ const mobilenetModule = require('./mobilenet.js');
 const knnClassifier = require('@tensorflow-models/knn-classifier'); 
 ```
 8.	将\Scratch3\scratch-vm\src\extension-support 中extension-manager.js 中的内容做如下修改，以调用scratch_knn中的index文件：<br>
-![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/6.gif)
-```js
+:::text
 const Scratch3KnnBlocks = require('../extensions/scratch3_knn');
 knnAlgorithm:() =>require('../extensions/scratch3_knn')
-```
+:::
 9.	将上述两个文件中的修改保存后，在\Scratch3\scratch-gui\src\lib\libraries\extensions 文件夹下修改index.jsx文件：<br>
 第一处修改，导引入图片。<br>
 ![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/7.gif)
