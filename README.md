@@ -40,58 +40,103 @@ git clone https://github.com/LLK/scratch-vm.git
 5.	回到 mobilenet.js 所在文件夹（\Scratch3\scratch-vm\src\extensions\scratch3_knn），修改mobilenet.js中url var BASE_PATH = '/static/knn/'。
 6.	在\Scratch3\scratch-gui\src\lib\libraries\extensions 目录下新建knnAlgorithm文件夹。在其中加入图片knnAlgorithm.png 和 knnAlgorithm-small.svg
 7.	将\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下 index.js 文件的导入部分做如下修改：<br>
-```js
-require('babel-polyfill');
-const Runtime = require('../../engine/runtime');
+```text
++require('babel-polyfill');
++const Runtime = require('../../engine/runtime');
 
-const ArgumentType = require('../../extension-support/argument-type');
-const BlockType = require('../../extension-support/block-type');
-const Clone = require('../../util/clone');
-const Cast = require('../../util/cast');
-const Video = require('../../io/video');
-const formatMessage = require('format-message');
-const tf = require('@tensorflow/tfjs');
-const mobilenetModule = require('./mobilenet.js');
-const knnClassifier = require('@tensorflow-models/knn-classifier'); 
++const ArgumentType = require('../../extension-support/argument-type');
++const BlockType = require('../../extension-support/block-type');
++const Clone = require('../../util/clone');
++const Cast = require('../../util/cast');
++const Video = require('../../io/video');
++const formatMessage = require('format-message');
++const tf = require('@tensorflow/tfjs');
++const mobilenetModule = require('./mobilenet.js');
++const knnClassifier = require('@tensorflow-models/knn-classifier'); 
 ```
 8.	将\Scratch3\scratch-vm\src\extension-support 中extension-manager.js 中的内容做如下修改，以调用scratch_knn中的index文件：<br>
-:::text
-const Scratch3KnnBlocks = require('../extensions/scratch3_knn');
-knnAlgorithm:() =>require('../extensions/scratch3_knn')
-:::
+```text
+const dispatch = require('../dispatch/central-dispatch');
+const log = require('../util/log');
+const maybeFormatMessage = require('../util/maybe-format-message');
+
+const BlockType = require('./block-type');
+
++const Scratch3KnnBlocks = require('../extensions/scratch3_knn');
+// These extensions are currently built into the VM repository but should not be loaded at startup.
+// TODO: move these out into a separate repository?
+// TODO: change extension spec so that library info, including extension ID, can be collected through static methods
+
+const builtinExtensions = {
+    // This is an example that isn't loaded with the other core blocks,
+    // but serves as a reference for loading core blocks as extensions.
+    coreExample: () => require('../blocks/scratch3_core_example'),
+    // These are the non-core built-in extensions.
+    pen: () => require('../extensions/scratch3_pen'),
+    wedo2: () => require('../extensions/scratch3_wedo2'),
+    music: () => require('../extensions/scratch3_music'),
+    microbit: () => require('../extensions/scratch3_microbit'),
+    text2speech: () => require('../extensions/scratch3_text2speech'),
+    translate: () => require('../extensions/scratch3_translate'),
+    videoSensing: () => require('../extensions/scratch3_video_sensing'),
+    ev3: () => require('../extensions/scratch3_ev3'),
+    makeymakey: () => require('../extensions/scratch3_makeymakey'),
+    boost: () => require('../extensions/scratch3_boost'),
+    gdxfor: () => require('../extensions/scratch3_gdx_for'),
++   knnAlgorithm:() =>require('../extensions/scratch3_knn')
+};
+
+```
+
 9.	将上述两个文件中的修改保存后，在\Scratch3\scratch-gui\src\lib\libraries\extensions 文件夹下修改index.jsx文件：<br>
 第一处修改，导引入图片。<br>
-![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/7.gif)
-```js
-import knnalgorithmImage from './knnAlgorithm/knnAlgorithm.png';
-import knnalgorithmInsetImage from './knnAlgorithm/knnAlgorithm-small.svg';
+```text
+import translateIconURL from './translate/translate.png';
+import translateInsetIconURL from './translate/translate-small.png';
+
+import makeymakeyIconURL from './makeymakey/makeymakey.png';
+import makeymakeyInsetIconURL from './makeymakey/makeymakey-small.svg';
+
++import knnalgorithmImage from './knnAlgorithm/knnAlgorithm.png';
++import knnalgorithmInsetImage from './knnAlgorithm/knnAlgorithm-small.svg';
+
+import microbitIconURL from './microbit/microbit.png';
+import microbitInsetIconURL from './microbit/microbit-small.svg';
+import microbitConnectionIconURL from './microbit/microbit-illustration.svg';
+import microbitConnectionSmallIconURL from './microbit/microbit-small.svg';
 ```
-第二处修改，导引入extension模块。<br>
- ![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/8.gif)
-  
-```js
-{
-        name: (
-            <FormattedMessage
-                defaultMessage="knn algorithm"
-                description="Name for the 'knn algorithm' extension"
-                id="gui.extension.knnalgorithm.name"
-            />
-        ),
-        extensionId: 'knnAlgorithm',
-        iconURL: knnalgorithmImage,
-        insetIconURL: knnalgorithmInsetImage,
-        description: (
-            <FormattedMessage
-                defaultMessage="knn algorithm."
-                description="Description for the 'knn algorithm' extension"
-                id="gui.extension.knnalgorithm.description"
-            />
-        ),
-        featured: true
-    },
+
+第二处修改，导引入extension模块(在index.jsxexport default []部分中添加如下代码段）。<br>
+
+```text
+export default [
+......
+......
+{.....
+.....
+},
++{
++       name: (
++           <FormattedMessage
++               defaultMessage="knn algorithm"
++               description="Name for the 'knn algorithm' extension"
++               id="gui.extension.knnalgorithm.name"
++           />
++       ),
++       extensionId: 'knnAlgorithm',
++       iconURL: knnalgorithmImage,
++       insetIconURL: knnalgorithmInsetImage,
++       description: (
++           <FormattedMessage
++               defaultMessage="knn algorithm."
++               description="Description for the 'knn algorithm' extension"
++               id="gui.extension.knnalgorithm.description"
++           />
++       ),
++       featured: true
++   },
 ```
-注意上图中红色框标注的id与extension-manager.js中knnAlgorithm:() =>require('../extensions/scratch3_knn') 代码中的“knnAlgorithm”相同，并且这个id也要与index.js（\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下）中的“getInfo()”部分return部分内的id内容一致，否则点击extension对应图标时无法自动移动到程序块组所在位置（程序块组此时会出现，但菜单栏不会主动移动）
+注意上图中extensionId与extension-manager.js中knnAlgorithm:() =>require('../extensions/scratch3_knn') 代码中的“knnAlgorithm”相同，并且这个id也要与index.js（\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下）中的“getInfo()”部分return部分内的id内容一致，否则点击extension对应图标时无法自动移动到程序块组所在位置（程序块组此时会出现，但菜单栏不会主动移动）
 
 ###     2.2	运行调试及附加依赖的安装
 由于上述index.js中出现了新的依赖，我们需要再次编译并调试程序且准备好所需的依赖。下述操作均在cmder中执行，不再赘述。
