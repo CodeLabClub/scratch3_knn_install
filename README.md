@@ -234,7 +234,7 @@ ERROR in ./src/extensions/scratch3_knn/index.js
 此时应显示编译成功（Compiled successfully）。至此，Scratch3中knn模块安装完成。
 
 建议使用“石头剪刀布”测试knn图像分类结果，测试程序块示意图如下：<br>
-![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/9.png)
+![image](https://github.com/TyutWzz-beep/scratch_knn_install/blob/master/images/9.png)<br>
 如图所示左侧绿色块为knn模块中所携带的API，右侧为“石头剪刀布”测试的程序。你可以使用该程序自行测试安装是否成功。
 ```
 操作系统：windows10 家庭版
