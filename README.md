@@ -142,7 +142,7 @@ export default [
 由于上述index.js中出现了新的依赖，我们需要再次编译并调试程序且准备好所需的依赖。下述操作均在cmder中执行，不再赘述。
 1.在Scratch3\scratch-gui 目录下按顺序执行 yarn install 和 webpack-dev-server –https 命令。
 等待webpack-dev-server –https编译完毕后（此时显示编译错误“Fail to compile”）打开cmder新窗口，在Scratch3\scratch-vm 下按顺序执行 yarn install，yarn link，yarn add uglifyjs-webpack-plugin 和 yarn run watch。
-2.按照 yarn run watch 的运行结果进行依赖的添加，注意此时停止webpack-dev-server –https和yarn run watch 的运行。之后在新的cmder窗口中在Scratch3\scratch-gui 目录下运行yarn link scratch-vm 命令。
+2.0按照 yarn run watch 的运行结果进行依赖的添加，注意此时停止webpack-dev-server –https和yarn run watch 的运行。之后在新的cmder窗口中在Scratch3\scratch-gui 目录下运行yarn link scratch-vm 命令。
 yarn run watch 的运行报错如下：
 ```text
 ERROR in ./src/extensions/scratch3_knn/index.js
