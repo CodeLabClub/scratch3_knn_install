@@ -33,12 +33,12 @@ yarn run watch
 ###     2.1	源文件中的设置
 在Scrathc3开发环境下安装knn模块需要对Scratch的scratch-vm和scratch-gui文件夹中的相关文件做出修改并添加相应的本地文件，在Scratch3中添加相对应模块  的方式大致相同，只是index.js文件大相径庭。因此相关过程亦可参考https://blog.just4fun.site/post/少儿编程/create-first-scratch3-extension/ 中所给出的方法。
 
-1.下载knn需要的本地文件，在所选择的任意文件夹目录下执行 git clone https://github.com/CodeLabClub/scratch3_knn.git 
-2.将scratch3_knn中的index.js文件复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹中（其中scratch3_knn为新建的文件夹）。
-3.将scratch3_knn中的mobilenet.js文件夹复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹内（与index.js处于同一文件夹）
-4.将knn文件夹复制到\Scratch3\scratch-gui\static 目录下。（上述过程可参见https://github.com/CodeLabClub/scratch3_knn/issues/3）
-5.回到 mobilenet.js 所在文件夹（\Scratch3\scratch-vm\src\extensions\scratch3_knn），修改mobilenet.js中url var BASE_PATH = '/static/knn/'。
-6.在\Scratch3\scratch-gui\src\lib\libraries\extensions 目录下新建knnAlgorithm文件夹。在其中加入图片knnAlgorithm.png 和 knnAlgorithm-small.svg
+1.下载knn需要的本地文件，在所选择的任意文件夹目录下执行 git clone https://github.com/CodeLabClub/scratch3_knn.git<br> 
+2.将scratch3_knn中的index.js文件复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹中（其中scratch3_knn为新建的文件夹）。<br>
+3.将scratch3_knn中的mobilenet.js文件夹复制到\Scratch3\scratch-vm\src\extensions\scratch3_knn 文件夹内（与index.js处于同一文件夹）<br>
+4.将knn文件夹复制到\Scratch3\scratch-gui\static 目录下。（上述过程可参见https://github.com/CodeLabClub/scratch3_knn/issues/3）<br>
+5.回到 mobilenet.js 所在文件夹（\Scratch3\scratch-vm\src\extensions\scratch3_knn），修改mobilenet.js中url var BASE_PATH = '/static/knn/'。<br>
+6.在\Scratch3\scratch-gui\src\lib\libraries\extensions 目录下新建knnAlgorithm文件夹。在其中加入图片knnAlgorithm.png 和 knnAlgorithm-small.svg<br>
 7.将\Scratch3\scratch-vm\src\extensions\scratch3_knn 目录下 index.js 文件的导入部分做如下修改：<br>
 ```text
 +require('babel-polyfill');
@@ -241,6 +241,21 @@ ERROR in ./src/extensions/scratch3_knn/index.js
 电脑型号：lenovo ThinkPadE460
 浏览器：Microsoft Edge
 ```
+
+### 以下为结果展示
+
+1. 训练“石头”类型，设置以方向键触发，从摄像头（webcam）取10个样本作为“石头”的训练集：<br>
+![image](https://github.com/doNotBeTooSerious/gifImages/blob/master/scratch3_knn/%E7%9F%B3%E5%A4%B4%E8%AE%AD%E7%BB%83.gif)<br>
+
+2. 训练“剪刀”类型，同样以方向键触发，获取10个样本作为训练集：<br>
+![image](https://github.com/doNotBeTooSerious/gifImages/blob/master/scratch3_knn/%E5%89%AA%E5%88%80%E8%AE%AD%E7%BB%83.gif)<br>
+
+3. 训练“布”类型，以方向键触发，获取10个样本作为训练集：<br>
+![image](https://github.com/doNotBeTooSerious/gifImages/blob/master/scratch3_knn/%E5%B8%83%E8%AE%AD%E7%BB%83.gif)<br>
+
+
+
+
 
 
 
