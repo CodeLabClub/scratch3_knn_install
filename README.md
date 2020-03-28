@@ -253,8 +253,8 @@ ERROR in ./src/extensions/scratch3_knn/index.js
 3. 训练“布”类型，以方向键触发，获取10个样本作为训练集：<br>
 ![image](https://github.com/doNotBeTooSerious/gifImages/blob/master/scratch3_knn/%E5%B8%83%E8%AE%AD%E7%BB%83.gif)<br>
 
-详细的训练和验证结果可以参见以下视频：<br>
-<iframe src="//player.bilibili.com/player.html?aid=285006006&bvid=BV1Sc41187P2&cid=170598313&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+注意训练每一个类别时要使用不同的Train，只修改label中内容而使用相同的Train 会使得一个类别实际储存了多个类别的样本作为训练集，导致结果出现问题。<br><br>
+详细的训练和验证结果可以参见[这个视频](https://www.bilibili.com/video/BV1Sc41187P2/)。<br>
 
 
 
